@@ -1,0 +1,96 @@
+<!-- 
+Avaliação:
+
+()Bolinha inicia no centro se movendo em uma diagonal aleatória: 2pts
+()Bolinha quica nas paredes: 2pts
+()Bolinha quica nas "raquetes": 2pts
+()Marca ponto quando a bolinha sai da tela pelos lados e reinicia bolinha no centro se movendo em uma diagonal aleatória: 2pts
+(V)Permite controlar as raquetes com o teclado e impede que elas saiam da tela: 2pts
+
+|||||||||||||||||||||||||||||||||||||||||SE DER TEMPO NOIS FAZ ISSO MULECOTE!|||||||||||||||||||||||||||||||||||||||||
+|||Features extras envolvendo JS poderão valer 0,1 na nota final do trimestre, consulte o professor.                 |
+|||(ex.: música e efeitos sonoros, controle via mouse, lista de recordes, variação do ângulo de movimento da bolinha | |||conforme local que tocou a raquete, narração usando a "mulher do Google", etc...)                                 |
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Pong BarboSom</title>
+    </head>   
+    <body>
+        <div style="background: gray">
+            <button id="botao" style="width: 100px" onclick="if(x==1){ controle(); x=0;}">
+                Jogar
+            </button>
+            <canvas id="canvas" width="1000" height="650" style="align-content: center; border:10px solid black;">
+                <script language="javascript">
+                    var canvas;
+                    var context;
+                    var play1X=10;
+                    var play1Y=260;
+                    var play2X=980;
+                    var play2Y=260;
+                    var velocidadeBarra;
+                    var x=1;
+                    function controle(){
+                        canvas=document.getElementById("canvas");
+                        context=canvas.getContext("2d");
+                        ballCounter=0;
+                        velocidadeBarra=100;
+                        setInterval(pong, 20);
+                    }
+                    function pong(){
+                        context.clearRect(0, 0, 1000, 650);
+                        context.fillRect(play1X, play1Y, 10, 120);
+                        context.fillRect(play2X, play2Y, 10, 120);
+                    }
+                    document.addEventListener('keyup',keyW, false);
+                    document.addEventListener('keydown', keyS, false);
+                    var teclaWPlay1;
+                    var teclaSPlay1;
+                    function keyW(e){
+                        if(e.keyCode==38){
+                            if(play2Y>0){
+                                play2Y=play2Y-velocidadeBarra;
+                                teclaWPlay1=1;
+                                teclaSPlay1=0;
+                            }
+                        }
+                    }
+                    function keyS(e){
+                        if(e.keyCode==40){
+                            if(play2Y<530){
+                                play2Y=play2Y+velocidadeBarra;
+                                teclaSPlay1=1;
+                                teclaWPlay1=0;
+                            }
+                        }
+                    }
+                    document.addEventListener('keyup', keyUp, false);
+                    document.addEventListener('keydown', keyDown, false);
+                    var cetaCimaPlay2; 
+                    var cetaBaixoPlay2;
+                    function keyUp(e){
+                        if(e.keyCode==87){
+                            if(play1Y>0){
+                                play1Y=play1Y-velocidadeBarra;
+                                cetaCimaPlay2=1;
+                                cetaBaixoPlay2=0;
+                            }
+                        }
+                    }
+                    function keyDown(e){
+                        if(e.keyCode==83){
+                            if(play1Y<(canvas.height-120)){
+                                play1Y=play1Y+velocidadeBarra;
+                                cetaBaixoPlay2=1;
+                                cetaCimaPlay2=0;
+                            }
+                        }
+                    }
+                </script>
+            </canvas>
+        </div>
+    </body>
+</html>
