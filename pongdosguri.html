@@ -2,8 +2,8 @@
 Avaliação:
 
 ()Bolinha inicia no centro se movendo em uma diagonal aleatória: 2pts
-()Bolinha quica nas paredes: 2pts
-()Bolinha quica nas "raquetes": 2pts
+(V)Bolinha quica nas paredes: 2pts
+(V)Bolinha quica nas "raquetes": 2pts
 ()Marca ponto quando a bolinha sai da tela pelos lados e reinicia bolinha no centro se movendo em uma diagonal aleatória: 2pts
 (V)Permite controlar as raquetes com o teclado e impede que elas saiam da tela: 2pts
 
@@ -33,17 +33,78 @@ Avaliação:
                     var play2Y=260;
                     var velocidadeBarra;
                     var x=1;
+                    var bX; 
+                    var bY; 
+                    var ballDirection; 
+                    var ballA = Math.floor(Math.random()); 
+                    var ballCounter;
+                    var img = new Image();
+
                     function controle(){
                         canvas=document.getElementById("canvas");
                         context=canvas.getContext("2d");
                         ballCounter=0;
+                        bX=500;
+                        bY=325;
                         velocidadeBarra=100;
+                        img.src='cabecinha.png';
                         setInterval(pong, 20);
                     }
                     function pong(){
                         context.clearRect(0, 0, 1000, 650);
                         context.fillRect(play1X, play1Y, 10, 120);
                         context.fillRect(play2X, play2Y, 10, 120);
+                         if(ballCounter==0){
+                            if(bX<play1X+10){
+                                if(!(bY<play1Y)) if(!(bY>play1Y+120)){
+                                    ballDirection=1;
+                                    if(teclaWPlay1==1){
+                                        ballA=Math.floor(Math.random()*8)*-2;
+                                    }
+                                    if(teclaSPlay1==1){
+                                        ballA=Math.floor((Math.random()*8)*2);
+                                    }                        
+                                }                    
+                            }
+                            else if(!((bX)<=play2X)){
+                                if(!(bY<play2Y)) if(!(bY>play2Y+120)){
+                                    ballDirection=0;
+                                    if(cetaBaixoPlay2==1){
+                                        ballA=Math.floor((Math.random()*8)*2);
+                                    }  
+                                    if(cetaCimaPlay2==1){
+                                        ballA=Math.floor(Math.random()*8)*-2;
+                                    }
+                                }
+                            } 
+                            if((bY<0)){
+                                ballA=ballA*-1;
+                            } else
+                            if((bY>650)){
+                                ballA=ballA*-1;
+                            }
+                            bY=bY+ballA;
+                            if(ballDirection){
+                                bX=bX+10;
+                            }
+                            else{
+                                bX=bX-10;
+                            }           
+                        }
+                        if((bX>1000) || (bX<0)){
+                            if(ballCounter>0){
+                                bX=500;
+                                bY=325;
+                                ballA=Math.floor(Math.random()*10);
+                                ballCounter=0;
+                            }
+                            else{
+                                ballCounter++;
+                            }
+                        }
+                        context.beginPath();
+                        context.drawImage(img, bX, bY, 70, 70);
+                        context.fill();
                     }
                     document.addEventListener('keyup',keyW, false);
                     document.addEventListener('keydown', keyS, false);
