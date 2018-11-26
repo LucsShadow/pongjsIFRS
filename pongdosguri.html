@@ -1,11 +1,11 @@
 <!-- 
 Avaliação:
 
-()Bolinha inicia no centro se movendo em uma diagonal aleatória: 2pts
-(V)Bolinha quica nas paredes: 2pts
-(V)Bolinha quica nas "raquetes": 2pts
-()Marca ponto quando a bolinha sai da tela pelos lados e reinicia bolinha no centro se movendo em uma diagonal aleatória: 2pts
-(V)Permite controlar as raquetes com o teclado e impede que elas saiam da tela: 2pts
+(X)Bolinha inicia no centro se movendo em uma diagonal aleatória: 2pts
+(X)Bolinha quica nas paredes: 2pts
+(X)Bolinha quica nas "raquetes": 2pts
+(X)Marca ponto quando a bolinha sai da tela pelos lados e reinicia bolinha no centro se movendo em uma diagonal aleatória: 2pts
+(X)Permite controlar as raquetes com o teclado e impede que elas saiam da tela: 2pts
 
 |||||||||||||||||||||||||||||||||||||||||SE DER TEMPO NOIS FAZ ISSO MULECOTE!|||||||||||||||||||||||||||||||||||||||||
 |||Features extras envolvendo JS poderão valer 0,1 na nota final do trimestre, consulte o professor.                 |
@@ -36,9 +36,11 @@ Avaliação:
                     var bX; 
                     var bY; 
                     var ballDirection; 
-                    var ballA = Math.floor(Math.random()); 
+                    var ballA=Math.floor(Math.random()); 
                     var ballCounter;
                     var img = new Image();
+                    var Play1=0; 
+                    var Play2=0;
 
                     function controle(){
                         canvas=document.getElementById("canvas");
@@ -47,36 +49,49 @@ Avaliação:
                         bX=500;
                         bY=325;
                         velocidadeBarra=100;
-                        img.src='cabecinha.png';
+                        img.src='bola.png';
                         setInterval(pong, 20);
                     }
+
                     function pong(){
                         context.clearRect(0, 0, 1000, 650);
+                        context.font = "30pt Keep Calm";
+                        context.fillText(Play1+" - "+Play2,450,50);
+                        if(Play1==5){
+                            Play1=0;
+                            Play2=0;
+                            alert("Player 1 Venceu!");
+                        }
+                        else if(Play2==5){
+                            Play1=0;
+                            Play2=0;
+                            alert("Player 2 Venceu!");
+                        }
                         context.fillRect(play1X, play1Y, 10, 120);
                         context.fillRect(play2X, play2Y, 10, 120);
                          if(ballCounter==0){
                             if(bX<play1X+10){
                                 if(!(bY<play1Y)) if(!(bY>play1Y+120)){
-                                    ballDirection=1;
                                     if(teclaWPlay1==1){
                                         ballA=Math.floor(Math.random()*8)*-2;
                                     }
                                     if(teclaSPlay1==1){
                                         ballA=Math.floor((Math.random()*8)*2);
-                                    }                        
+                                    }    
+                                    ballDirection=1;                    
                                 }                    
                             }
-                            else if(!((bX)<=play2X)){
+                            else if(!((bX)<=play2X-10)){
                                 if(!(bY<play2Y)) if(!(bY>play2Y+120)){
-                                    ballDirection=0;
                                     if(cetaBaixoPlay2==1){
                                         ballA=Math.floor((Math.random()*8)*2);
                                     }  
                                     if(cetaCimaPlay2==1){
                                         ballA=Math.floor(Math.random()*8)*-2;
                                     }
+                                    ballDirection=0;
                                 }
-                            } 
+                            }
                             if((bY<0)){
                                 ballA=ballA*-1;
                             } else
@@ -93,8 +108,20 @@ Avaliação:
                         }
                         if((bX>1000) || (bX<0)){
                             if(ballCounter>0){
+                                if(bX<0){
+                                    Play2 = Play2 +1; 
+                                }
+                                if(bX>1000){
+                                    Play1 = Play1 +1;
+                                }
                                 bX=500;
                                 bY=325;
+                                if(Math.floor(Math.random()*2)==0){
+                                    ballDirection=1;
+                                }
+                                else{
+                                    ballDirection=0;
+                                }
                                 ballA=Math.floor(Math.random()*10);
                                 ballCounter=0;
                             }
@@ -103,7 +130,7 @@ Avaliação:
                             }
                         }
                         context.beginPath();
-                        context.drawImage(img, bX, bY, 70, 70);
+                        context.drawImage(img, bX, bY, 15, 15);
                         context.fill();
                     }
                     document.addEventListener('keyup',keyW, false);
@@ -155,3 +182,12 @@ Avaliação:
         </div>
     </body>
 </html>
+<!-- 
+Links que podem ser úteis:
+
+- http://www.devfuria.com.br/javascript/numeros-aleatorios
+- https://www.w3schools.com/tags/ref_canvas.asp
+- https://stackoverflow.com/questions/6348494/addeventlistener-vs-onclick
+- https://www.w3schools.com/jsref/met_win_setinterval.asp
+
+-->
